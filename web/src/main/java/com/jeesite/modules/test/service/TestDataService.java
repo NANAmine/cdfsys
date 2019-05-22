@@ -3,24 +3,24 @@
  */
 package com.jeesite.modules.test.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.jeesite.common.entity.Page;
-import com.jeesite.common.lang.DateUtils;
 import com.jeesite.common.service.CrudService;
-import com.jeesite.modules.file.utils.FileUploadUtils;
-import com.jeesite.modules.sys.service.UserService;
-import com.jeesite.modules.test.dao.TestDataChildDao;
-import com.jeesite.modules.test.dao.TestDataDao;
 import com.jeesite.modules.test.entity.TestData;
+import com.jeesite.modules.test.dao.TestDataDao;
+import com.jeesite.modules.file.utils.FileUploadUtils;
 import com.jeesite.modules.test.entity.TestDataChild;
+import com.jeesite.modules.test.dao.TestDataChildDao;
 
 /**
  * 测试数据Service
  * @author ThinkGem
- * @version 2018-04-22
+ * @version 2019-04-29
  */
 @Service
 @Transactional(readOnly=true)
@@ -47,22 +47,12 @@ public class TestDataService extends CrudService<TestDataDao, TestData> {
 	
 	/**
 	 * 查询分页数据
-	 * @param page 分页对象
-	 * @param testData
+	 * @param testData 查询条件
+	 * @param testData.page 分页对象
 	 * @return
 	 */
 	@Override
 	public Page<TestData> findPage(TestData testData) {
-		
-//		// 演示Map参数和返回值，支持分页
-//		Page<Map<String, Object>> pageMap = new Page<>();
-//		Map<String, Object> params = MapUtils.newHashMap();
-//		params.put("testInput", "123");
-//		params.put("page", pageMap);
-//		pageMap.setList(dao.findListForMap(params));
-//		System.out.println(pageMap.getList());
-//		System.out.println(pageMap.getCount());
-		
 		return super.findPage(testData);
 	}
 	
@@ -115,15 +105,7 @@ public class TestDataService extends CrudService<TestDataDao, TestData> {
 		super.delete(testData);
 		TestDataChild testDataChild = new TestDataChild();
 		testDataChild.setTestData(testData);
-		testDataChildDao.deleteByEntity(testDataChild);
-	}
-	
-	/**
-	 * 任务调度测试：testDataService.executeTestTask(userService, 1, 2L, 3F, 4D, 'abc')
-	 */
-	public void executeTestTask(UserService userService, Integer i, Long l, Float f, Double d, String s){
-		System.out.println(DateUtils.getTime() + " 任务执行了~~~  bean: " + userService + ", i: " + i
-				+ ", l: " + l + ", f: " + f + ", d: " + d + ", s: " + s);
+		testDataChildDao.delete(testDataChild);
 	}
 	
 }

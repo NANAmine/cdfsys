@@ -3,25 +3,25 @@
  */
 package com.jeesite.modules.test.entity;
 
-import org.hibernate.validator.constraints.Length;
-import java.util.Date;
-import com.jeesite.common.mybatis.annotation.JoinTable;
-import com.jeesite.common.mybatis.annotation.JoinTable.Type;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.jeesite.modules.sys.entity.User;
-import com.jeesite.modules.sys.entity.Office;
-import java.util.List;
 import com.jeesite.common.collect.ListUtils;
-
 import com.jeesite.common.entity.DataEntity;
 import com.jeesite.common.mybatis.annotation.Column;
+import com.jeesite.common.mybatis.annotation.JoinTable;
+import com.jeesite.common.mybatis.annotation.JoinTable.Type;
 import com.jeesite.common.mybatis.annotation.Table;
 import com.jeesite.common.mybatis.mapper.query.QueryType;
+import com.jeesite.modules.sys.entity.Office;
+import com.jeesite.modules.sys.entity.User;
+import org.hibernate.validator.constraints.Length;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * 测试数据Entity
  * @author ThinkGem
- * @version 2018-04-22
+ * @version 2019-04-29
  */
 @Table(name="test_data", alias="a", columns={
 		@Column(name="id", attrName="id", label="编号", isPK=true),
@@ -31,12 +31,12 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 		@Column(name="test_select_multiple", attrName="testSelectMultiple", label="下拉多选"),
 		@Column(name="test_radio", attrName="testRadio", label="单选框"),
 		@Column(name="test_checkbox", attrName="testCheckbox", label="复选框"),
-		@Column(name="test_date", attrName="testDate", label="日期选择", isUpdateForce=true),
+		@Column(name="test_date", attrName="testDate", label="日期选择"),
 		@Column(name="test_datetime", attrName="testDatetime", label="日期时间"),
 		@Column(name="test_user_code", attrName="testUser.userCode", label="用户选择"),
 		@Column(name="test_office_code", attrName="testOffice.officeCode", label="机构选择"),
 		@Column(name="test_area_code", attrName="testAreaCode", label="区域选择"),
-		@Column(name="test_area_name", attrName="testAreaName", label="区域名称"),
+		@Column(name="test_area_name", attrName="testAreaName", label="区域名称", isQuery=false),
 		@Column(includeEntity=DataEntity.class),
 	}, joinTable={
 		@JoinTable(type=Type.LEFT_JOIN, entity=User.class, attrName="testUser", alias="u10",
@@ -44,7 +44,7 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 				@Column(name="user_code", label="用户编码", isPK=true),
 				@Column(name="user_name", label="用户名称", isQuery=false),
 		}),
-		@JoinTable(type=Type.LEFT_JOIN, entity=Office.class, attrName="testOffice", alias="u11",
+		@JoinTable(type=Type.LEFT_JOIN, entity= Office.class, attrName="testOffice", alias="u11",
 			on="u11.office_code = a.test_office_code", columns={
 				@Column(name="office_code", label="机构编码", isPK=true),
 				@Column(name="office_name", label="机构名称", isQuery=false),

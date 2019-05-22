@@ -5,14 +5,14 @@ package com.jeesite.modules.test.dao;
 
 import com.jeesite.common.dao.CrudDao;
 import com.jeesite.common.mybatis.annotation.MyBatisDao;
-import com.jeesite.modules.test.entity.TestDataChild;
+import com.jeesite.modules.test.entity.SqCustomer;
 
 /**
- * 测试数据DAO接口
- * @author ThinkGem
+ * 顾客表DAO接口
+ * @author ljw
  * @version 2019-04-29
  */
 @MyBatisDao
-public interface TestDataChildDao extends CrudDao<TestDataChild> {
+public interface SqCustomerDao extends CrudDao<SqCustomer> {
 	
 }
