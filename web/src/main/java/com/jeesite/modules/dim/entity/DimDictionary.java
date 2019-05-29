@@ -14,7 +14,7 @@ import java.util.Date;
 /**
  * 通用字典表Entity
  * @author ljw
- * @version 2019-05-09
+ * @version 2019-05-29
  */
 @Table(name="dim_dictionary", alias="a", columns={
 		@Column(name="ddic_id", attrName="ddicId", label="主键", isPK=true),
@@ -25,11 +25,11 @@ import java.util.Date;
 		@Column(name="ddic_desc", attrName="ddicDesc", label="描述", queryType=QueryType.LIKE),
 		@Column(name="ddic_pid", attrName="ddicPid", label="父级编码", isQuery=false),
 		@Column(name="ddic_expand1", attrName="ddicExpand1", label="部门名称", queryType=QueryType.LIKE),
-		@Column(name="ddic_expand2", attrName="ddicExpand2", label="备用1", isInsert=false, isUpdate=false, isQuery=false),
-		@Column(name="ddic_expand3", attrName="ddicExpand3", label="备用2", isInsert=false, isUpdate=false, isQuery=false),
-		@Column(name="ddic_expand4", attrName="ddicExpand4", label="备用3", isInsert=false, isUpdate=false, isQuery=false),
+		@Column(name="ddic_expand2", attrName="ddicExpand2", label="备用1", isQuery=false),
+		@Column(name="ddic_expand3", attrName="ddicExpand3", label="备用2", isQuery=false),
+		@Column(name="ddic_expand4", attrName="ddicExpand4", label="备用3", isQuery=false),
 		@Column(name="status", attrName="status", label="状态", isUpdate=false, queryType=QueryType.LIKE),
-		@Column(name="ddic_sort", attrName="ddicSort", label="备用4", isInsert=false, isUpdate=false, isQuery=false),
+		@Column(name="ddic_sort", attrName="ddicSort", label="备用4", isUpdate=false, isQuery=false),
 		@Column(name="create_date", attrName="createDate", label="数据插入时间", isUpdate=false),
 		@Column(name="update_date", attrName="updateDate", label="更数据最近新时间"),
 		@Column(name="update_by", attrName="updateBy", label="最近更新人", queryType=QueryType.LIKE),

@@ -10,7 +10,7 @@ import com.jeesite.modules.dim.entity.DimDictionary;
 /**
  * 通用字典表DAO接口
  * @author ljw
- * @version 2019-05-09
+ * @version 2019-05-29
  */
 @MyBatisDao
 public interface DimDictionaryDao extends CrudDao<DimDictionary> {

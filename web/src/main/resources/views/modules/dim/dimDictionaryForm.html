@@ -67,9 +67,9 @@
 					<div class="col-xs-6">
 						<div class="form-group">
 							<label class="control-label col-sm-4" title="">
-								<span class="required hide">*</span>${text('门店编码')}：<i class="fa icon-question hide"></i></label>
+								<span class="required">*</span>${text('门店编码')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:input path="ddicExpand2" maxlength="200" readonly="${status == 'true'}" class="form-control digits"/>
+								<#form:input path="ddicExpand2" maxlength="200" readonly="${status == 'true'}" class="form-control required digits"/>
 							</div>
 						</div>
 					</div>
@@ -83,7 +83,7 @@
 								digits：正整数验证
 								abc：数字字母验证
 								-->
-								<#form:input path="ddicExpand3" maxlength="200" readonly="${status == 'true'}"  class="form-control required Chinese"/>
+								<#form:input path="ddicExpand3" maxlength="200" readonly="${status == 'true'}"  class="form-control required  Chinese"/>
 							</div>
 						</div>
 					</div>
@@ -170,8 +170,9 @@
 <script>
 	(function start(status){
 		var ddicCode =  "${dimDictionary.ddicCode}"
-		console.log(status)
-		console.log(ddicCode)
+		var ddicExpand3 =  "${dimDictionary.ddicExpand3}"
+		var ddicExpand2 =  "${dimDictionary.ddicExpand2}"
+
 		if(ddicCode != "QXKZ" ){
 			document.getElementById("bm").style.display="none";
 		}
@@ -184,8 +185,30 @@
 		if(ddicCode == "XHPPHL"){
 			document.getElementById("xhpphl").style.display="";
 		}
-
+		if(ddicExpand3 !=""&&ddicExpand3!=null){
+			document.getElementById('ddicExpand2').className="form-control digits";
+		}
+		if(ddicExpand2 !=""&&ddicExpand2!=null){
+			document.getElementById('ddicExpand3').className="form-control Chinese";
+		}
 	})(${status})
+	$("#ddicExpand3").bind("input propertychange",function(event){
+		var ddicExpand3 =  "${dimDictionary.ddicExpand3}"
+		var ddicExpand2 =  "${dimDictionary.ddicExpand2}"
+		document.getElementById('ddicExpand2').className="form-control digits";
+		if(ddicExpand2==""&&ddicExpand2==null){
+			document.getElementById('ddicExpand3').className="form-control required Chinese";
+		}
+	})
+	$("#ddicExpand2").bind("input propertychange",function(event){
+		var ddicExpand3 =  "${dimDictionary.ddicExpand3}"
+		var ddicExpand2 =  "${dimDictionary.ddicExpand2}"
+		document.getElementById('ddicExpand3').className="form-control Chinese";
+		if(ddicExpand3==null&&ddicExpand3==""){
+			document.getElementById('ddicExpand2').className="form-control required digits";
+		}
+
+	})
 $("#inputForm").validate({
 	submitHandler: function(form){
 		js.ajaxSubmitForm($(form), function(data){

@@ -168,8 +168,8 @@
 					}},
 				/*{header:'${text(dimDictionary.ddicCode == "GDBBMD"? "门店简称": (dimDictionary.ddicCode == "JPPPCODE" ? "团队简称" : (dimDictionary.ddicCode == "GCYJZDDP" ? "系列简称" : (dimDictionary.ddicCode == "SPBHPP" ? "简称" : (dimDictionary.ddicCode == "JSCQD" ? "渠道简称" : (dimDictionary.ddicCode == "ZLBQD" ? "渠道简称" : (dimDictionary.ddicCode == "ZLBZCGX" ? "资产关系简称" : (dimDictionary.ddicCode == "XHPPHL" ? "品牌简称" : (dimDictionary.ddicCode == "XHMD" ? "门店简称" : (dimDictionary.ddicCode == "HOLIDAY" ? "节日简称" : (dimDictionary.ddicCode == "QXKZ" ? "用户简称" : (dimDictionary.ddicCode == "GCYJZDMD" ? "门店简称" : (dimDictionary.ddicCode == "MDZLBFL" ? "门店简称" : "简称")))))))))))))}', name:'ddicEname', index:'a.ddic_ename', width:150, align:"left"},*/
 				{header:'${text("汇率值")}', name:'ddicValue', index:'a.ddic_value', width:150, align:"left"},
-				{header:'${text("门店编码")}', name:'ddicExpand2', index:'a.ddic_expand2', width:150, align:"left",class:"",id:"",name:""},
-				{header:'${text("门店名称")}', name:'ddicExpand3', index:'a.ddic_expand3', width:150, align:"left",class:"",id:"",name:""},
+				{header:'${text("门店编码")}', name:'ddicExpand2', index:'a.ddic_expand2', width:150, align:"left"},
+				{header:'${text("门店名称")}', name:'ddicExpand3', index:'a.ddic_expand3', width:150, align:"left"},
 				{header:'${text("状态")}', name:'status', index:'a.status', width:150, align:"center", formatter: function(val, obj, row, act){
 						return js.getDictLabel(${@DictUtils.getDictListJson('sys_search_status')}, val, '${text("未知")}', true);
 					}},

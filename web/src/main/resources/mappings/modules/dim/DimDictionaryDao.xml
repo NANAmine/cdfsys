@@ -11,12 +11,6 @@
 		</where>
 		ORDER BY ${sqlMap.order.toSql()}
 	</select> -->
-	<!--<update id="deleteAll">
-		update dim_dictionary a
-		set a.status = '1'
-		where
-			a.DDIC_CODE = #{ddicCode}
-	</update>-->
 	<update id="deleteAll" parameterType="com.jeesite.modules.dim.entity.DimDictionary">
 		update dim_dictionary
 		set status = '1'
