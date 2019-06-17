@@ -14,7 +14,7 @@ import java.util.Date;
 /**
  * 通用字典表Entity
  * @author ljw
- * @version 2019-05-29
+ * @version 2019-06-17
  */
 @Table(name="dim_dictionary", alias="a", columns={
 		@Column(name="ddic_id", attrName="ddicId", label="主键", isPK=true),
@@ -33,6 +33,7 @@ import java.util.Date;
 		@Column(name="create_date", attrName="createDate", label="数据插入时间", isUpdate=false),
 		@Column(name="update_date", attrName="updateDate", label="更数据最近新时间"),
 		@Column(name="update_by", attrName="updateBy", label="最近更新人", queryType=QueryType.LIKE),
+		@Column(name="ddic_status", attrName="ddicStatus", label="记录状态"),
 	}, orderBy="a.update_date DESC"
 )
 public class DimDictionary extends DataEntity<DimDictionary> {
@@ -50,6 +51,7 @@ public class DimDictionary extends DataEntity<DimDictionary> {
 	private String ddicExpand3;		// 备用2
 	private String ddicExpand4;		// 备用3
 	private String ddicSort;		// 备用4
+	private String ddicStatus;		// 记录状态
 	
 	public DimDictionary() {
 		this(null);
@@ -164,6 +166,15 @@ public class DimDictionary extends DataEntity<DimDictionary> {
 
 	public void setDdicSort(String ddicSort) {
 		this.ddicSort = ddicSort;
+	}
+
+	@Length(min=0, max=1, message="记录状态长度不能超过 1 个字符")
+	public String getDdicStatus() {
+		return ddicStatus;
+	}
+
+	public void setDdicStatus(String ddicStatus) {
+		this.ddicStatus = ddicStatus;
 	}
 	
 	public Date getCreateDate_gte() {

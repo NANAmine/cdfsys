@@ -51,6 +51,7 @@ public class DimDictionaryService extends CrudService<DimDictionaryDao, DimDicti
 	@Override
 	@Transactional(readOnly=false)
 	public void save(DimDictionary dimDictionary) {
+		dimDictionary.setDdicStatus("1");
 		super.save(dimDictionary);
 		// 保存上传附件
 		FileUploadUtils.saveFileUpload(dimDictionary.getId(), "dimDictionary_file");
@@ -83,6 +84,15 @@ public class DimDictionaryService extends CrudService<DimDictionaryDao, DimDicti
 	@Transactional(readOnly=false)
 	public void deleteAll(DimDictionary dimDictionary) {
 		dimDictionaryDao.deleteAll(dimDictionary);
+	}
+
+	/**
+	 * 删除数据更新状态
+	 * @param dimDictionary
+	 */
+	@Transactional(readOnly=false)
+	public void upDelete(DimDictionary dimDictionary) {
+		dimDictionaryDao.upDelete(dimDictionary);
 	}
 
 }

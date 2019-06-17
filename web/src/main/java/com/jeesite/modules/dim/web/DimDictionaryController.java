@@ -149,6 +149,7 @@ public class DimDictionaryController extends BaseController {
 	@ResponseBody
 	public String delete(DimDictionary dimDictionary) {
 		dimDictionaryService.delete(dimDictionary);
+		dimDictionaryService.upDelete(dimDictionary);
 		return renderResult(Global.TRUE, text("删除通用字典表成功！"));
 	}
 	

@@ -13,7 +13,12 @@
 	</select> -->
 	<update id="deleteAll" parameterType="com.jeesite.modules.dim.entity.DimDictionary">
 		update dim_dictionary
-		set status = '1'
+		set status = '1' and DDIC_STATUS = '0'
 		where DDIC_CODE = #{ddicCode}
+	</update>
+	<update id="upDelete" parameterType="com.jeesite.modules.dim.entity.DimDictionary">
+		update dim_dictionary
+		set DDIC_STATUS = '0'
+		where DDIC_ID = #{ddicId}
 	</update>
 </mapper>

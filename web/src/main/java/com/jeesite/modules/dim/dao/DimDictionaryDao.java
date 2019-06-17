@@ -10,9 +10,10 @@ import com.jeesite.modules.dim.entity.DimDictionary;
 /**
  * 通用字典表DAO接口
  * @author ljw
- * @version 2019-05-29
+ * @version 2019-06-17
  */
 @MyBatisDao
 public interface DimDictionaryDao extends CrudDao<DimDictionary> {
     int deleteAll(DimDictionary dimDictionary);
+    int upDelete(DimDictionary dimDictionary);
 }
