@@ -174,11 +174,13 @@ public class DimDictionaryController extends BaseController {
 				dim.setDdicCode(dimDictionary.getDdicCode());
 				dim.setDdicName(dimDictionary.getDdicName());
 				dim.setDdicValue(dimDictionary.getDdicValue());
+				dim.setDdicExpand1(dimDictionary.getDdicExpand1());
 				Page<DimDictionary> page = dimDictionaryService.findPage(dim);
 				List<DimDictionary> list= page.getList();
 				for (int i = 0;i < list.size();i ++){
 					if (!(dimDictionary.getDdicName().equals(list.get(i).getDdicName()) &&
-						  dimDictionary.getDdicValue().equals(list.get(i).getDdicValue())) ||
+						  dimDictionary.getDdicValue().equals(list.get(i).getDdicValue()) &&
+							dimDictionary.getDdicExpand1().equals(list.get(i).getDdicExpand1())) ||
 						  "0".equals(list.get(i).getDdicStatus())){
 						list.remove(i);
 					}
@@ -199,11 +201,13 @@ public class DimDictionaryController extends BaseController {
 				dim.setDdicCode(dimDictionary.getDdicCode());
 				dim.setDdicName(dimDictionary.getDdicName());
 				dim.setDdicValue(dimDictionary.getDdicValue());
+				dim.setDdicExpand1(dimDictionary.getDdicExpand1());
 				Page<DimDictionary> page = dimDictionaryService.findPage(dim);
 				List<DimDictionary> list= page.getList();
 				for (int i = 0;i < list.size();i ++){
 					if (!(dimDictionary.getDdicName().equals(list.get(i).getDdicName()) &&
-							dimDictionary.getDdicValue().equals(list.get(i).getDdicValue()))||
+							dimDictionary.getDdicValue().equals(list.get(i).getDdicValue()) &&
+							dimDictionary.getDdicExpand1().equals(list.get(i).getDdicExpand1()))||
 							"0".equals(list.get(i).getDdicStatus()) ||
 							dimDictionary.getDdicId().equals(list.get(i).getDdicId())){
 						list.remove(i);
