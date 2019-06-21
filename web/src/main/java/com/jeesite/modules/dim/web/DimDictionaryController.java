@@ -123,12 +123,41 @@ public class DimDictionaryController extends BaseController {
 			dim.setDdicName(dimDictionary.getDdicName());
 			Page<DimDictionary> page = dimDictionaryService.findPage(dim);
 			List<DimDictionary> list= page.getList();
+			for (int i = 0;i < list.size();i ++){
+				if (!dimDictionary.getDdicName().equals(list.get(i).getDdicName()) || "0".equals(list.get(i).getDdicStatus())){
+					list.remove(i);
+				}
+			}
 			if (list.size() != 0){
-				return renderResult(Global.TRUE, text("数据已经存在，不可重复添加！"));
+				for (int i = 0;i < list.size();i ++){
+					if ("1".equals(list.get(i).getDdicStatus())){
+						return renderResult(Global.TRUE, text("数据已经存在，不可重复添加！"));
+					}
+				}
 			}else{
 				dimDictionaryService.save(dimDictionary);
 			}
 		}else{
+			DimDictionary dim = new DimDictionary();
+			dim.setPage(new Page<>(1, 1));
+			dim.setDdicCode(dimDictionary.getDdicCode());
+			dim.setDdicName(dimDictionary.getDdicName());
+			Page<DimDictionary> page = dimDictionaryService.findPage(dim);
+			List<DimDictionary> list= page.getList();
+			for (int i = 0;i < list.size();i ++){
+				if (!dimDictionary.getDdicName().equals(list.get(i).getDdicName()) ||
+						"0".equals(list.get(i).getDdicStatus()) ||
+						dimDictionary.getDdicId().equals(list.get(i).getDdicId())){
+					list.remove(i);
+				}
+			}
+			if (list.size() != 0){
+				for (int i = 0;i < list.size();i ++){
+					if ("1".equals(list.get(i).getDdicStatus())){
+						return renderResult(Global.TRUE, text("数据已经存在，不可重复添加！"));
+					}
+				}
+			}
 			dimDictionaryService.save(dimDictionary);
 		}
 		return renderResult(Global.TRUE, text("保存通用字典表成功！"));
