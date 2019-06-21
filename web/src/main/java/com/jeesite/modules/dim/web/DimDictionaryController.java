@@ -116,51 +116,12 @@ public class DimDictionaryController extends BaseController {
 	@PostMapping(value = "save")
 	@ResponseBody
 	public String save(@Validated DimDictionary dimDictionary) {
-		if(dimDictionary.getIsNewRecord()){
-			DimDictionary dim = new DimDictionary();
-			dim.setPage(new Page<>(1, 1));
-			dim.setDdicCode(dimDictionary.getDdicCode());
-			dim.setDdicName(dimDictionary.getDdicName());
-			Page<DimDictionary> page = dimDictionaryService.findPage(dim);
-			List<DimDictionary> list= page.getList();
-			for (int i = 0;i < list.size();i ++){
-				if (!dimDictionary.getDdicName().equals(list.get(i).getDdicName()) || "0".equals(list.get(i).getDdicStatus())){
-					list.remove(i);
-				}
-			}
-			if (list.size() != 0){
-				for (int i = 0;i < list.size();i ++){
-					if ("1".equals(list.get(i).getDdicStatus())){
-						return renderResult(Global.TRUE, text("数据已经存在，不可重复添加！"));
-					}
-				}
-			}else{
-				dimDictionaryService.save(dimDictionary);
-			}
+		String ddiccode = quchong(dimDictionary.getDdicCode(),dimDictionary);
+		if("false".equals(ddiccode)){
+			return renderResult(Global.TRUE, text("数据已经存在，不可重复添加！"));
 		}else{
-			DimDictionary dim = new DimDictionary();
-			dim.setPage(new Page<>(1, 1));
-			dim.setDdicCode(dimDictionary.getDdicCode());
-			dim.setDdicName(dimDictionary.getDdicName());
-			Page<DimDictionary> page = dimDictionaryService.findPage(dim);
-			List<DimDictionary> list= page.getList();
-			for (int i = 0;i < list.size();i ++){
-				if (!dimDictionary.getDdicName().equals(list.get(i).getDdicName()) ||
-						"0".equals(list.get(i).getDdicStatus()) ||
-						dimDictionary.getDdicId().equals(list.get(i).getDdicId())){
-					list.remove(i);
-				}
-			}
-			if (list.size() != 0){
-				for (int i = 0;i < list.size();i ++){
-					if ("1".equals(list.get(i).getDdicStatus())){
-						return renderResult(Global.TRUE, text("数据已经存在，不可重复添加！"));
-					}
-				}
-			}
-			dimDictionaryService.save(dimDictionary);
+			return renderResult(Global.TRUE, text("保存通用字典表成功！"));
 		}
-		return renderResult(Global.TRUE, text("保存通用字典表成功！"));
 	}
 	
 	/**
@@ -198,5 +159,161 @@ public class DimDictionaryController extends BaseController {
 		dimDictionaryService.upDelete(dimDictionary);
 		return renderResult(Global.TRUE, text("删除通用字典表成功！"));
 	}
-	
+
+	/**
+	 *去重方法
+	 * */
+	public String quchong(String ddiccode,DimDictionary dimDictionary){
+		if ("HOLIDAY".equals(ddiccode)){                               //节假日
+			dimDictionaryService.save(dimDictionary);
+			return "true";
+		}else if ("QXKZ".equals(ddiccode)){                            //权限控制
+			if(dimDictionary.getIsNewRecord()){
+				DimDictionary dim = new DimDictionary();
+				dim.setPage(new Page<>(1, 1));
+				dim.setDdicCode(dimDictionary.getDdicCode());
+				dim.setDdicName(dimDictionary.getDdicName());
+				dim.setDdicValue(dimDictionary.getDdicValue());
+				Page<DimDictionary> page = dimDictionaryService.findPage(dim);
+				List<DimDictionary> list= page.getList();
+				for (int i = 0;i < list.size();i ++){
+					if (!(dimDictionary.getDdicName().equals(list.get(i).getDdicName()) &&
+						  dimDictionary.getDdicValue().equals(list.get(i).getDdicValue())) ||
+						  "0".equals(list.get(i).getDdicStatus())){
+						list.remove(i);
+					}
+				}
+				if (list.size() != 0){
+					for (int i = 0;i < list.size();i ++){
+						if ("1".equals(list.get(i).getDdicStatus())){
+							return "false";
+						}
+					}
+				}else{
+					dimDictionaryService.save(dimDictionary);
+					return "true";
+				}
+			}else{
+				DimDictionary dim = new DimDictionary();
+				dim.setPage(new Page<>(1, 1));
+				dim.setDdicCode(dimDictionary.getDdicCode());
+				dim.setDdicName(dimDictionary.getDdicName());
+				dim.setDdicValue(dimDictionary.getDdicValue());
+				Page<DimDictionary> page = dimDictionaryService.findPage(dim);
+				List<DimDictionary> list= page.getList();
+				for (int i = 0;i < list.size();i ++){
+					if (!(dimDictionary.getDdicName().equals(list.get(i).getDdicName()) &&
+							dimDictionary.getDdicValue().equals(list.get(i).getDdicValue()))||
+							"0".equals(list.get(i).getDdicStatus()) ||
+							dimDictionary.getDdicId().equals(list.get(i).getDdicId())){
+						list.remove(i);
+					}
+				}
+				if (list.size() != 0){
+					for (int i = 0;i < list.size();i ++){
+						if ("1".equals(list.get(i).getDdicStatus())){
+							return "false";
+						}
+					}
+				}
+				dimDictionaryService.save(dimDictionary);
+				return "true";
+			}
+		}else if("XHPPHL".equals(ddiccode) || "GZMJ".equals(ddiccode)){    //香化品牌汇率、柜组面积
+			if(dimDictionary.getIsNewRecord()){
+				DimDictionary dim = new DimDictionary();
+				dim.setPage(new Page<>(1, 1));
+				dim.setDdicCode(dimDictionary.getDdicCode());
+				dim.setDdicName(dimDictionary.getDdicName());
+				Page<DimDictionary> page = dimDictionaryService.findPage(dim);
+				List<DimDictionary> list= page.getList();
+				for (int i = 0;i < list.size();i ++){
+					if (!dimDictionary.getDdicName().equals(list.get(i).getDdicName()) || "0".equals(list.get(i).getDdicStatus())){
+						list.remove(i);
+					}
+				}
+				if (list.size() != 0){
+					for (int i = 0;i < list.size();i ++){
+						if ("1".equals(list.get(i).getDdicStatus())){
+							return "false";
+						}
+					}
+				}else{
+					dimDictionaryService.save(dimDictionary);
+					return "true";
+				}
+			}else{
+				DimDictionary dim = new DimDictionary();
+				dim.setPage(new Page<>(1, 1));
+				dim.setDdicCode(dimDictionary.getDdicCode());
+				dim.setDdicName(dimDictionary.getDdicName());
+				Page<DimDictionary> page = dimDictionaryService.findPage(dim);
+				List<DimDictionary> list= page.getList();
+				for (int i = 0;i < list.size();i ++){
+					if (!dimDictionary.getDdicName().equals(list.get(i).getDdicName()) ||
+							"0".equals(list.get(i).getDdicStatus()) ||
+							dimDictionary.getDdicId().equals(list.get(i).getDdicId())){
+						list.remove(i);
+					}
+				}
+				if (list.size() != 0){
+					for (int i = 0;i < list.size();i ++){
+						if ("1".equals(list.get(i).getDdicStatus())){
+							return "false";
+						}
+					}
+				}
+				dimDictionaryService.save(dimDictionary);
+				return "true";
+			}
+		}else {                                                                 //其它映射
+			if(dimDictionary.getIsNewRecord()){
+				DimDictionary dim = new DimDictionary();
+				dim.setPage(new Page<>(1, 1));
+				dim.setDdicCode(dimDictionary.getDdicCode());
+				dim.setDdicValue(dimDictionary.getDdicValue());
+				Page<DimDictionary> page = dimDictionaryService.findPage(dim);
+				List<DimDictionary> list= page.getList();
+				for (int i = 0;i < list.size();i ++){
+					if (!dimDictionary.getDdicValue().equals(list.get(i).getDdicValue()) || "0".equals(list.get(i).getDdicStatus())){
+						list.remove(i);
+					}
+				}
+				if (list.size() != 0){
+					for (int i = 0;i < list.size();i ++){
+						if ("1".equals(list.get(i).getDdicStatus())){
+							return "false";
+						}
+					}
+				}else{
+					dimDictionaryService.save(dimDictionary);
+					return "true";
+				}
+			}else{
+				DimDictionary dim = new DimDictionary();
+				dim.setPage(new Page<>(1, 1));
+				dim.setDdicCode(dimDictionary.getDdicCode());
+				dim.setDdicValue(dimDictionary.getDdicValue());
+				Page<DimDictionary> page = dimDictionaryService.findPage(dim);
+				List<DimDictionary> list= page.getList();
+				for (int i = 0;i < list.size();i ++){
+					if (!dimDictionary.getDdicValue().equals(list.get(i).getDdicValue()) ||
+							"0".equals(list.get(i).getDdicStatus()) ||
+							dimDictionary.getDdicId().equals(list.get(i).getDdicId())){
+						list.remove(i);
+					}
+				}
+				if (list.size() != 0){
+					for (int i = 0;i < list.size();i ++){
+						if ("1".equals(list.get(i).getDdicStatus())){
+							return "false";
+						}
+					}
+				}
+				dimDictionaryService.save(dimDictionary);
+				return "true";
+			}
+		}
+		return "true";
+	}
 }
