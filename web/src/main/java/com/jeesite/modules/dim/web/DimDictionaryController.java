@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * 通用字典表Controller
@@ -75,6 +76,8 @@ public class DimDictionaryController extends BaseController {
 			dimDictionary.setDdicCode("HOLIDAY");
 		}else if("14".equals(id)){
 			dimDictionary.setDdicCode("QXKZ");
+		}else if("15".equals(id)){
+			dimDictionary.setDdicCode("GZMJ");
 		}
 		model.addAttribute("dimDictionary", dimDictionary);
 		return "modules/dim/dimDictionaryList";
@@ -113,7 +116,21 @@ public class DimDictionaryController extends BaseController {
 	@PostMapping(value = "save")
 	@ResponseBody
 	public String save(@Validated DimDictionary dimDictionary) {
-		dimDictionaryService.save(dimDictionary);
+		if(dimDictionary.getIsNewRecord()){
+			DimDictionary dim = new DimDictionary();
+			dim.setPage(new Page<>(1, 1));
+			dim.setDdicCode(dimDictionary.getDdicCode());
+			dim.setDdicName(dimDictionary.getDdicName());
+			Page<DimDictionary> page = dimDictionaryService.findPage(dim);
+			List<DimDictionary> list= page.getList();
+			if (list.size() != 0){
+				return renderResult(Global.TRUE, text("数据已经存在，不可重复添加！"));
+			}else{
+				dimDictionaryService.save(dimDictionary);
+			}
+		}else{
+			dimDictionaryService.save(dimDictionary);
+		}
 		return renderResult(Global.TRUE, text("保存通用字典表成功！"));
 	}
 	
